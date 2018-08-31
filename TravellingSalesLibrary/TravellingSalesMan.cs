@@ -64,10 +64,10 @@ namespace TravellingSalesLibrary
                         bestDistance = distance;
                         closestCityIndex = i;
                     }
-
-                    Iterations++;
                     ReportProgress();
                 }
+
+                //Thread.Sleep(10);
 
                 if (BestRoute.Count < Cities.Count)
                 {
@@ -75,11 +75,10 @@ namespace TravellingSalesLibrary
                     _vertex = closestCityIndex;
                     BestRoute.Add(Cities[_vertex]);
                 }
-            }
 
-            for (int i = 0; i < 100000; i++)
-            {
-                TwoOptSwap();
+                //TwoOptSwap();
+
+                Iterations++;
             }
         }
 
@@ -88,9 +87,9 @@ namespace TravellingSalesLibrary
             List<Node> temp = Copy(BestRoute);
             double beforeDistance = CalculateTotalDistance(BestRoute);
 
-            for (int i = 0; i < BestRoute.Count() - 1; i++)
+            for (int i = 0; i < BestRoute.Count - 1; i++)
             {
-                for (int k = i + 1; k < BestRoute.Count(); k++)
+                for (int k = i + 1; k < BestRoute.Count; k++)
                 {
                     temp = Swap(temp, BestRoute, i, k);
 
