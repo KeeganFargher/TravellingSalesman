@@ -40,27 +40,39 @@ namespace TravellingSalesman
             Brush brushColor = new SolidBrush(Color.FromArgb(46, 209, 66));
             Pen pen = new Pen(brushColor, 2);
 
-            foreach (Node node in TravellingSalesMan.Cities)
-            {
-                brushColor = new SolidBrush(Color.FromArgb(209, 57, 46));
-                if (node.Visited) { brushColor = new SolidBrush(Color.FromArgb(68, 207, 74)); }
-
-                e.Graphics.FillEllipse(brushColor, new RectangleF(
-                    node.XLocation, 
-                    node.YLocation, 
-                    TravellingSalesMan.EllipseSize, 
-                    TravellingSalesMan.EllipseSize));
-            }
+            //  Draws the nodes
+            DrawNodes(e, brushColor);
 
             //  Draw lines to connect the nodes
+            DrawBestLines(e, pen);
+
+        }
+
+        private void DrawBestLines(PaintEventArgs e, Pen pen)
+        {
             for (int i = 0; i < TravellingSalesMan.BestRoute.Count - 1; i++)
             {
                 Point point1 = GetPoint(TravellingSalesMan.BestRoute[i]);
                 Point point2 = GetPoint(TravellingSalesMan.BestRoute[i + 1]);
                 e.Graphics.DrawLine(pen, point1, point2);
             }
-
         }
+
+        private void DrawNodes(PaintEventArgs e, Brush brushColor)
+        {
+            foreach (Node node in TravellingSalesMan.Cities)
+            {
+                brushColor = new SolidBrush(Color.FromArgb(209, 57, 46));
+                if (node.Visited) { brushColor = new SolidBrush(Color.FromArgb(68, 207, 74)); }
+
+                e.Graphics.FillEllipse(brushColor, new RectangleF(
+                    node.XLocation,
+                    node.YLocation,
+                    TravellingSalesMan.EllipseSize,
+                    TravellingSalesMan.EllipseSize));
+            }
+        }
+
 
         private Point GetPoint(Node city)
         {
@@ -72,7 +84,6 @@ namespace TravellingSalesman
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             TravellingSalesMan.ReportProgress += ReportHandler;
-
             Task.Run(() => TravellingSalesMan.CalculateNearestNeighbour());
         }
 
@@ -88,16 +99,6 @@ namespace TravellingSalesman
 
         }
 
-        private void TravellingSalesForm_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void TrackBarSpeed_ValueChanged(object sender, EventArgs e)
-        {
- 
-        }
-
         private void TrackBarCities_ValueChanged(object sender, EventArgs e)
         {
             TravellingSalesMan.TotalCities = Convert.ToInt32(trackBarCities.Value);
@@ -108,7 +109,6 @@ namespace TravellingSalesman
         private void TrackBarCircleSize_ValueChanged(object sender, EventArgs e)
         {
             TravellingSalesMan.EllipseSize = Convert.ToInt32(trackBarCircleSize.Value);
-            //TravellingSalesMan.InitCity();
             Invalidate();
         }
     }

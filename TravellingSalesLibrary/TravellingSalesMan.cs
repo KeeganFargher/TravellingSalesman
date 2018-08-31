@@ -68,7 +68,6 @@ namespace TravellingSalesLibrary
                     Iterations++;
                     ReportProgress();
                 }
-                //Thread.Sleep(1);
 
                 if (BestRoute.Count < Cities.Count)
                 {
@@ -78,7 +77,7 @@ namespace TravellingSalesLibrary
                 }
             }
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 TwoOptSwap();
             }
